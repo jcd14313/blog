@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// Lib
+import React from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
+
+// Context
+import { MainProvider } from './context/MainContext'
+
+// Components
+import NotFound from './components/not-found'
+import Layout from './components/layout'
+
+// Pages
+import SinglePostPage from './pages/single-post-page'
+import PostPage from './pages/post-page'
+
+// Styles
+import GlobalStyle from './globalStyles'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <MainProvider>
+      <GlobalStyle />
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Navigate to="/posts" replace />} />
+          <Route path="/posts" element={<PostPage />} />
+          <Route path="/post/:id" element={<SinglePostPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Layout>
+    </MainProvider>
+  )
 }
 
-export default App;
+export default App
